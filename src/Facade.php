@@ -9,6 +9,7 @@ use support\Request;
 use Workerman\Timer;
 use ReflectionFunction;
 use Workerman\Coroutine;
+use Workerman\Events\Fiber;
 use AloneWebMan\Bot\process\DevBot;
 use AloneWebMan\Bot\process\AsyncBot;
 use AloneWebMan\Bot\process\RedisQueue;
@@ -57,23 +58,26 @@ class Facade {
         $config = static::config($plugin);
         if ($config['async_status'] && $config['async_listen']) {
             $process['AsyncBot'] = [
-                "name"    => $plugin,
-                "handler" => AsyncBot::class,
-                'listen'  => 'frame://' . $config['async_listen'],
-                'count'   => $config['async_count']
+                "name"      => $plugin,
+                'eventLoop' => Fiber::class,
+                "handler"   => AsyncBot::class,
+                'listen'    => 'frame://' . $config['async_listen'],
+                'count'     => $config['async_count']
             ];
         }
         if ($config['dev_status']) {
             $process['DevBot'] = [
-                "name"    => $plugin,
-                'handler' => DevBot::class
+                "name"      => $plugin,
+                'eventLoop' => Fiber::class,
+                'handler'   => DevBot::class
             ];
         }
         if ($config['queue_status']) {
             $process['RedisQueue'] = [
-                "name"    => $plugin,
-                'handler' => RedisQueue::class,
-                'count'   => $config['queue_count']
+                "name"      => $plugin,
+                'eventLoop' => Fiber::class,
+                'handler'   => RedisQueue::class,
+                'count'     => $config['queue_count']
             ];
         }
         return $process;
@@ -322,11 +326,8 @@ class Facade {
      * @return string
      */
     public static function getPluginName(mixed $worker): string {
-        if ($worker && ($worker->onWorkerStart ?? '')) {
-            $reflection = new ReflectionFunction($worker->onWorkerStart);
-            $staticProperties = $reflection->getStaticVariables();
-            $plugin_name = $staticProperties['config']['name'] ?? '';
-        }
+        $staticProperties = static::getPluginArr($worker);
+        $plugin_name = $staticProperties['config']['name'] ?? '';
         if (empty($plugin_name)) {
             $arr = explode('.', $worker->name);
             $plugin_name = $arr[1] ?? '';
@@ -334,6 +335,19 @@ class Facade {
         return $plugin_name;
     }
 
+    /**
+     * 自定进程中获取配置
+     * @param mixed $worker
+     * @return array
+     */
+    public static function getPluginArr(mixed $worker): array {
+        $staticProperties = [];
+        if ($worker && ($worker->onWorkerStart ?? '')) {
+            $reflection = new ReflectionFunction($worker->onWorkerStart);
+            $staticProperties = $reflection->getStaticVariables();
+        }
+        return $staticProperties;
+    }
 
     /**
      * 机器人key转换成路由token

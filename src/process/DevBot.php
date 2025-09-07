@@ -22,9 +22,11 @@ class DevBot extends Common {
                 $updates[] = $k;
             }
         }
+        $plugin_arr = Facade::getPluginArr($worker);
+        $eventLoop = $plugin_arr['config']['eventLoop'] ?? '';
         $async_status = $config['async_status'];
         $file = run_path("runtime/" . $this->plugin_name . "_update_id_" . $token . ".cache");
-        Facade::timer($config['dev_timer'], function() use ($token, $bot_key, $async_status, $connect, $file, $updates) {
+        Facade::timer($config['dev_timer'], function() use ($config, $eventLoop, $token, $bot_key, $async_status, $connect, $file, $updates) {
             if ($token && $bot_key) {
                 $bot = alone_bot($bot_key);
                 $update_id = @file_get_contents($file);
@@ -43,9 +45,17 @@ class DevBot extends Common {
                                 $connection->close();
                             };
                             $async->connect();
-                        } else {
+                        } elseif ($config['queue_status']) {
                             foreach ($result as $post) {
                                 Facade::queue($this->plugin_name, $token, $post);
+                            }
+                        } elseif ($eventLoop) {
+                            foreach ($result as $post) {
+                                Facade::coroutine($this->plugin_name, $token, $post);
+                            }
+                        } else {
+                            foreach ($result as $post) {
+                                Facade::exec($this->plugin_name, $token, $post);
                             }
                         }
                     }
