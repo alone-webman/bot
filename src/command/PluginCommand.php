@@ -20,7 +20,7 @@ class PluginCommand extends Command {
     public function execute(InputInterface $input, OutputInterface $output): int {
         $name = $input->getArgument('name');
         echo "--------------------------------------------------------\r\n";
-        print_r(111);
+        print_r($name);
         echo "\r\n--------------------------------------------------------\r\n";
         return self::SUCCESS;
     }
