@@ -3,8 +3,20 @@
 namespace AloneWebMan\Bot;
 
 use AlonePhp\Telegram\Bot;
+use AloneWebMan\Bot\command\BotCommand;
+use AloneWebMan\Bot\command\PluginCommand;
 
 class BotPlugin {
+    /**
+     * 命令
+     * @return array
+     */
+    public static function command(): array {
+        return [
+            BotCommand::class,
+            PluginCommand::class
+        ];
+    }
 
     /**
      * 机器人key转换成路由token

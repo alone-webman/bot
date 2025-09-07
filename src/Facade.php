@@ -13,8 +13,6 @@ use Workerman\Events\Fiber;
 use AloneWebMan\Bot\process\DevBot;
 use AloneWebMan\Bot\process\AsyncBot;
 use AloneWebMan\Bot\process\RedisQueue;
-use AloneWebMan\Bot\command\BotCommand;
-use AloneWebMan\Bot\command\PluginCommand;
 use Workerman\Connection\AsyncTcpConnection;
 
 class Facade {
@@ -82,17 +80,6 @@ class Facade {
             ];
         }
         return $process;
-    }
-
-    /**
-     * 命令
-     * @return array
-     */
-    public static function command(): array {
-        return [
-            BotCommand::class,
-            PluginCommand::class
-        ];
     }
 
 

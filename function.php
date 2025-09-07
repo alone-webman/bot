@@ -26,7 +26,7 @@ function alone_bot_process(string $plugin): array {
  * @return array
  */
 function alone_bot_command(): array {
-    return Facade::command();
+    return BotPlugin::command();
 }
 
 /**
