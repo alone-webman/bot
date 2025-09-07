@@ -130,14 +130,6 @@ abstract class BotHelper {
     }
 
     /**
-     * 调试时发送
-     * @return Bot
-     */
-    public function sendDev(): Bot {
-        return alone_bot($this->getConfig('dev_bot_key', ''))->chat_id(explode(",", $this->getConfig('dev_chat_id', '')));
-    }
-
-    /**
      * 获取配置
      * @param string|null $key
      * @param mixed       $default

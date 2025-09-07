@@ -19,8 +19,6 @@ return [
     "dev_status"      => false,
     // 定时器
     "dev_timer"       => 0.1,
-    // 机器人token
-    "dev_token"       => "",
     // 机器人key
     "dev_bot_key"     => "",
     // 开发时报错发送

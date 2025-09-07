@@ -12,8 +12,8 @@ class DevBot extends Common {
     public function onWorkerStart(mixed $worker): void {
         $this->getPluginName($worker);
         $config = Facade::config($this->plugin_name);
-        $token = $config['dev_token'];
         $bot_key = $config['dev_bot_key'];
+        $token = get_bot_route_token($bot_key, $config['md5_key']);
         $connect = $config['async_connect'];
         $message = $config['message'] ?? [];
         $updates = [];

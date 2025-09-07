@@ -16,7 +16,7 @@ class Common extends BotHelper {
      * @return void
      */
     public function error(Exception|Throwable $error, array $array = []): void {
-        $this->sendDev()->sendMessage(Facade::json($array));
+        alone_bot($this->getConfig('dev_bot_key', ''))->chat_id(explode(",", $this->getConfig('dev_chat_id', '')))->sendMessage(Facade::json($array));
     }
 
     /**
