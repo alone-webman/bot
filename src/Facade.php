@@ -353,6 +353,6 @@ class Facade {
      * @return string
      */
     public static function getBotHeaderToken(string $routeToken, string $md5Key): string {
-        return md5($md5Key . $routeToken);
+        return md5($md5Key . md5($routeToken . $md5Key));
     }
 }
