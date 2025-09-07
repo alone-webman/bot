@@ -9,12 +9,12 @@ use support\Request;
 use Workerman\Timer;
 use ReflectionFunction;
 use Workerman\Coroutine;
-use AlonePhp\Telegram\Bot;
 use Workerman\Events\Fiber;
 use AloneWebMan\Bot\process\DevBot;
 use AloneWebMan\Bot\process\AsyncBot;
 use AloneWebMan\Bot\process\RedisQueue;
 use AloneWebMan\Bot\command\BotCommand;
+use AloneWebMan\Bot\command\PluginCommand;
 use Workerman\Connection\AsyncTcpConnection;
 
 class Facade {
@@ -91,7 +91,7 @@ class Facade {
     public static function command(): array {
         return [
             BotCommand::class,
-            BotPlugin::class
+            PluginCommand::class
         ];
     }
 
