@@ -4,57 +4,55 @@ return [
      * ==========================程序设置==========================
      */
     // 开发目录
-    'app_path'          => "plugin/alone/app",
+    'app_path'        => "plugin/alone/app",
     // 机器人路由/token
-    "router_path"       => "telegram/alone/api",
+    "router_path"     => "telegram/alone/api",
     //是否验证token
-    "token_verify"      => false,
+    "token_verify"    => false,
     //md5 key
-    "md5_key"           => "",
+    "md5_key"         => "",
 
     /*
      * ==========================开发设置==========================
      */
     // 是否开启调试
-    "dev_status"        => false,
+    "dev_status"      => false,
     // 定时器
-    "dev_timer"         => 0.1,
+    "dev_timer"       => 0.1,
     // 机器人key
-    "dev_bot_key"       => "",
-    // 开发时报错发送
-    "dev_chat_id"       => "",
+    "dev_bot_key"     => "",
 
     /*
      * ==========================队列设置==========================
      */
     // 队列自定义进程开关
-    "queue_status"      => false,
+    "queue_status"    => false,
     // 队列进程数量
-    "queue_count"       => 30,
+    "queue_count"     => 30,
     // 队列定时器
-    "queue_timer"       => 0.2,
+    "queue_timer"     => 0.2,
     // 队列任务数
-    "queue_task"        => 3,
+    "queue_task"      => 3,
     // 队列redis,key名称
-    "queue_redis_key"   => "alone_bot_queue_message",
+    "queue_redis_key" => "alone_bot_queue_message",
 
     /*
      * ==========================异步设置==========================
      */
     // 异步自定义进程开关
-    "async_status"      => false,
+    "async_status"    => false,
     // 启动异步ip端口
-    "async_listen"      => "0.0.0.0:12722",
+    "async_listen"    => "0.0.0.0:12722",
     // 连接异步ip端口
-    "async_connect"     => "127.0.0.1:12722",
+    "async_connect"   => "127.0.0.1:12722",
     //异步进程数量
-    "async_count"       => 30,
+    "async_count"     => 30,
 
     /*
      * ==========================信息设置==========================
      */
     // 信息分类,是否接收信息
-    "message"           => [
+    "message"         => [
         //普通消息
         'message'              => true,
         //回调查询（来自按钮点击）
@@ -79,7 +77,7 @@ return [
         'pre_checkout_query'   => false
     ],
     // 信息类型,是否接收信息
-    "msg"               => [
+    "msg"             => [
         //文本
         'text'      => true,
         //图片
