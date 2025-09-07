@@ -13,7 +13,7 @@ class BotCommand extends Command {
     protected static $defaultDescription = 'create bot plugin <info>[name]</info>';
 
     protected function configure(): void {
-        $this->addArgument('name', InputArgument::OPTIONAL, 'name', "");
+        $this->addArgument('name', InputArgument::OPTIONAL, 'name');
     }
 
 
@@ -26,10 +26,10 @@ class BotCommand extends Command {
     }
 
     /**
-     * @param string|int $name
+     * @param string|int|null $name
      * @return array|string
      */
-    public static function createBot(string|int $name): array|string {
+    public static function createBot(string|int|null $name): array|string {
         if (empty($name)) {
             return "Plugin name cannot be empty - php webman alone:bot name";
         }

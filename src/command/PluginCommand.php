@@ -2,7 +2,6 @@
 
 namespace AloneWebMan\Bot\command;
 
-use AloneWebMan\Bot\Facade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +12,7 @@ class PluginCommand extends Command {
     protected static $defaultDescription = 'bot plugin set <info>[plugin name]</info>';
 
     protected function configure(): void {
-        $this->addArgument('name', InputArgument::OPTIONAL, 'name', "");
+        $this->addArgument('name', InputArgument::OPTIONAL, 'name');
     }
 
 
