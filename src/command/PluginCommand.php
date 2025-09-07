@@ -35,7 +35,7 @@ class BotCommand extends Command {
         }
         $pluginPath = base_path("plugin/$name");
         if (is_dir($pluginPath)) {
-            return "$name The plugin already exists.";
+            return "$name The plugin already exists";
         }
         $list = [];
         $configPath = base_path("plugin/$name/config");
