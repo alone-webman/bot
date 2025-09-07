@@ -1,0 +1,32 @@
+{
+  "name":"alone-webman/bot",
+  "type":"library",
+  "license":"MIT",
+  "autoload":{
+    "psr-4":{
+      "AloneWebMan\\bot\\":"src"
+    },
+    "files":[
+      "function.php"
+    ]
+  },
+  "require":{
+    "php":">=8.0"
+  },
+  "require-dev":{
+    "workerman/webman-framework":"^2.1",
+    "monolog/monolog":"^2.0",
+    "webman/database":"^2.1",
+    "webman/console":"^2.1",
+    "symfony/var-dumper":"^6.4",
+    "revolt/event-loop":"^1.0",
+    "vlucas/phpdotenv":"^5.6",
+    "alone-php/telegram":"dev-main",
+    "alone-php/code":"dev-main",
+    "alone-webman/model":"dev-main",
+    "alone-webman/redis":"dev-main",
+    "webman/redis":"^2.1",
+    "illuminate/events":"^10.48",
+    "illuminate/pagination":"^10.48"
+  }
+}
