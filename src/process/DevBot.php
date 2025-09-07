@@ -2,6 +2,7 @@
 
 namespace AloneWebMan\Bot\process;
 
+use Workerman\Coroutine;
 use AloneWebMan\Bot\Facade;
 use Workerman\Connection\AsyncTcpConnection;
 
@@ -36,7 +37,13 @@ class DevBot extends Common {
                         $update_ids = array_column($result, 'update_id');
                         $update_id = (max($update_ids) ?: 0);
                         @file_put_contents($file, $update_id + 1);
-                        if ($async_status && $connect) {
+                        if ($eventLoop) {
+                            Coroutine::create(function() use ($result, $token) {
+                                foreach ($result as $post) {
+                                    Facade::exec($this->plugin_name, $token, $post);
+                                }
+                            });
+                        } elseif ($async_status && $connect) {
                             $async = new AsyncTcpConnection("frame://" . $connect);
                             $async->onConnect = function(AsyncTcpConnection $connection) use ($result, $token) {
                                 foreach ($result as $post) {
@@ -48,10 +55,6 @@ class DevBot extends Common {
                         } elseif ($config['queue_status']) {
                             foreach ($result as $post) {
                                 Facade::queue($this->plugin_name, $token, $post);
-                            }
-                        } elseif ($eventLoop) {
-                            foreach ($result as $post) {
-                                Facade::coroutine($this->plugin_name, $token, $post);
                             }
                         } else {
                             foreach ($result as $post) {
