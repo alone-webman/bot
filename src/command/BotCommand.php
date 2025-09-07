@@ -31,11 +31,11 @@ class BotCommand extends Command {
      */
     public static function createBot(string|int $name): array|string {
         if (empty($name)) {
-            return "插件名称不能为空 - php webman alone:bot name";
+            return "Plugin name cannot be empty - php webman alone:bot name";
         }
         $pluginPath = base_path("plugin/$name");
         if (is_dir($pluginPath)) {
-            return "$name 插件已存在";
+            return "$name The plugin already exists.";
         }
         $list = [];
         $configPath = base_path("plugin/$name/config");
