@@ -1,6 +1,6 @@
 <?php
 
-namespace AloneWebMan\Bot\demo\app;
+namespace demo\app;
 
 use AloneWebMan\Bot\Facade;
 

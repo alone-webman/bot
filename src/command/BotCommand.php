@@ -42,7 +42,7 @@ class BotCommand extends Command {
         Facade::mkDir($configPath);
         $configList = ["app.php", "process.php", "route.php", "telegram.php"];
         foreach ($configList as $file) {
-            $files = __DIR__ . '/../demo/config/' . $file;
+            $files = __DIR__ . '/../../demo/config/' . $file;
             $body = @file_get_contents($files);
             $body = Facade::tag($body, ['name' => $name, "port" => rand(1, 3) . rand(2, 9) . rand(001, 999)]);
             $saveName = $configPath . "/" . $file;
@@ -56,9 +56,9 @@ class BotCommand extends Command {
         Facade::mkDir($appPath);
         $appList = ["Bot.php", "Channel.php", "Common.php", "Group.php"];
         foreach ($appList as $file) {
-            $files = __DIR__ . '/../demo/app/' . $file;
+            $files = __DIR__ . '/../../demo/app/' . $file;
             $body = @file_get_contents($files);
-            $body = str_replace("AloneWebMan\Bot\demo\app", "plugin\\" . $name . "\app", $body);
+            $body = str_replace("demo\app;", "plugin\\" . $name . "\app;", $body);
             $saveName = $appPath . "/" . $file;
             if (!empty(@file_put_contents($saveName, $body))) {
                 $list["success"][] = "plugin/$name/app/$file";
