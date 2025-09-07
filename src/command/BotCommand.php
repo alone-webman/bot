@@ -19,7 +19,7 @@ class PluginCommand extends Command {
     public function execute(InputInterface $input, OutputInterface $output): int {
         $name = $input->getArgument('name');
         echo "--------------------------------------------------------\r\n";
-        print_r($name);
+        print_r("输入名称:$name,开发中");
         echo "\r\n--------------------------------------------------------\r\n";
         return self::SUCCESS;
     }
