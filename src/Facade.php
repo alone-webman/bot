@@ -90,7 +90,8 @@ class Facade {
      */
     public static function command(): array {
         return [
-            BotCommand::class
+            BotCommand::class,
+            BotPlugin::class
         ];
     }
 
