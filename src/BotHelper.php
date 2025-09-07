@@ -61,7 +61,7 @@ abstract class BotHelper {
 
     /**
      * 信息处理类型
-     * @param string $token
+     * @param string $token 路由token
      * @return string|int 1=实时,2=协程,3=队列,4=异步
      */
     abstract public function getSendType(string $token): string|int;
@@ -80,8 +80,8 @@ abstract class BotHelper {
 
     /**
      * 网页接收信息时验证头部信息
-     * @param string $token
-     * @param string $secret
+     * @param string $token  路由token
+     * @param string $secret 头部secret_token
      * @return bool true=验证通过
      */
     public function verifyRoute(string $token, string $secret): bool {
@@ -121,8 +121,8 @@ abstract class BotHelper {
     }
 
     /**
-     * @param string $plugin
-     * @param string $token
+     * @param string $plugin 插件名
+     * @param string $token  路由token
      */
     public function __construct(string $plugin, string $token) {
         $this->plugin = $plugin;

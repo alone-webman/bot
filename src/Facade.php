@@ -9,6 +9,7 @@ use support\Request;
 use Workerman\Timer;
 use ReflectionFunction;
 use Workerman\Coroutine;
+use AlonePhp\Telegram\Bot;
 use Workerman\Events\Fiber;
 use AloneWebMan\Bot\process\DevBot;
 use AloneWebMan\Bot\process\AsyncBot;
@@ -301,8 +302,7 @@ class Facade {
         if (!empty($string)) {
             $array = array_combine(array_map(fn($key) => ($symbol . $key . $symbol), array_keys($array)), array_values($array));
             $result = strtr($string, $array);
-            $result = preg_replace("/" . $symbol . "[^" . $symbol . "]+" . $symbol . "/", '', $result);
-            $string = trim($result);
+            $string = trim(preg_replace("/" . $symbol . "[^" . $symbol . "]+" . $symbol . "/", '', $result));
         }
         return $string ?? '';
     }
@@ -347,26 +347,5 @@ class Facade {
             $staticProperties = $reflection->getStaticVariables();
         }
         return $staticProperties;
-    }
-
-    /**
-     * 机器人key转换成路由token
-     * @param string $botToken 机器人Token
-     * @param string $md5Key   md5key
-     * @return string
-     */
-    public static function getBotRouteToken(string $botToken, string $md5Key): string {
-        return md5($botToken . $md5Key);
-    }
-
-
-    /**
-     * 路由token转换成头部token
-     * @param string $routeToken 路由token
-     * @param string $md5Key     md5key
-     * @return string
-     */
-    public static function getBotHeaderToken(string $routeToken, string $md5Key): string {
-        return md5($md5Key . md5($routeToken . $md5Key));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use AloneWebMan\Bot\Facade;
+use AloneWebMan\Bot\BotPlugin;
 
 /**
  * 启动路由
@@ -56,7 +57,7 @@ function alone_bot_config(string $plugin): array {
  * @return string
  */
 function get_bot_route_token(string $botToken, string $md5Key): string {
-    return Facade::getBotRouteToken($botToken, $md5Key);
+    return BotPlugin::getBotRouteToken($botToken, $md5Key);
 }
 
 
@@ -67,5 +68,5 @@ function get_bot_route_token(string $botToken, string $md5Key): string {
  * @return string
  */
 function get_bot_header_token(string $routeToken, string $md5Key): string {
-    return Facade::getBotHeaderToken($routeToken, $md5Key);
+    return BotPlugin::getBotHeaderToken($routeToken, $md5Key);
 }
