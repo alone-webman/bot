@@ -7,6 +7,10 @@ return [
     'app_path'        => "plugin/%name%/app",
     // 机器人路由 后面会自动加token
     "router_path"     => "telegram/%name%/api",
+    //是否验证token
+    "token_verify"    => false,
+    //md5 key
+    "md5_key"         => "%key%",
 
     /*
      * ==========================开发设置==========================

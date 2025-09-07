@@ -41,10 +41,16 @@ class BotCommand extends Command {
         $configPath = base_path("plugin/$name/config");
         Facade::mkDir($configPath);
         $configList = ["app.php", "process.php", "route.php", "telegram.php"];
+        $port = rand(1, 3) . rand(2, 9) . rand(001, 999);
+        $key = md5($name . time() . $port);
         foreach ($configList as $file) {
             $files = __DIR__ . '/../../demo/config/' . $file;
             $body = @file_get_contents($files);
-            $body = Facade::tag($body, ['name' => $name, "port" => rand(1, 3) . rand(2, 9) . rand(001, 999)]);
+            $body = Facade::tag($body, [
+                "key"  => $key,
+                "name" => $name,
+                "port" => $port
+            ]);
             $saveName = $configPath . "/" . $file;
             if (!empty(@file_put_contents($saveName, $body))) {
                 $list["success"][] = "plugin/$name/config/$file";

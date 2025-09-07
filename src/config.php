@@ -7,6 +7,10 @@ return [
     'app_path'        => "plugin/alone/app",
     // 机器人路由/token
     "router_path"     => "telegram/alone/api",
+    //是否验证token
+    "token_verify"    => false,
+    //md5 key
+    "md5_key"         => "",
 
     /*
      * ==========================开发设置==========================
