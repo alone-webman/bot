@@ -8,24 +8,6 @@ use AloneWebMan\Bot\Facade;
 use AloneWebMan\Bot\BotHelper;
 
 class Common extends BotHelper {
-    /**
-     * 网页接收信息时验证头部信息
-     * @param string $token
-     * @param string $secret 收到的x-telegram-bot-api-secret-token
-     * @return bool true=验证通过
-     */
-    public function verifyRoute(string $token, string $secret): bool {
-        return true;
-    }
-
-    /**
-     * 信息处理类型
-     * @param string $token
-     * @return string|int 1=实时,2=协程,3=队列,4=异步
-     */
-    public function getSendType(string $token): string|int {
-        return 2;
-    }
 
     /**
      * 程序报错回调
@@ -35,6 +17,15 @@ class Common extends BotHelper {
      */
     public function error(Exception|Throwable $error, array $array = []): void {
         $this->sendDev()->sendMessage(Facade::json($array));
+    }
+
+    /**
+     * 信息处理类型
+     * @param string $token
+     * @return string|int 1=实时,2=协程,3=队列,4=异步
+     */
+    public function getSendType(string $token): string|int {
+        return 2;
     }
 
     /**

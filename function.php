@@ -47,3 +47,25 @@ function alone_bot_exec(string $plugin, string $token, array $post): void {
 function alone_bot_config(string $plugin): array {
     return Facade::config($plugin);
 }
+
+
+/**
+ * 机器人key转换成路由token
+ * @param string $botToken 机器人Token
+ * @param string $md5Key   md5key
+ * @return string
+ */
+function get_bot_route_token(string $botToken, string $md5Key): string {
+    return Facade::getBotRouteToken($botToken, $md5Key);
+}
+
+
+/**
+ * 路由token转换成头部token
+ * @param string $routeToken 路由token
+ * @param string $md5Key     md5key
+ * @return string
+ */
+function get_bot_header_token(string $routeToken, string $md5Key): string {
+    return Facade::getBotHeaderToken($routeToken, $md5Key);
+}

@@ -52,11 +52,12 @@ abstract class BotHelper {
     public Bot|null $tel = null;
 
     /**
-     * 网页接收信息时验证头部信息
-     * @param string $secret 收到的x-telegram-bot-api-secret-token
-     * @return bool true=验证通过
+     * 程序报错回调
+     * @param Exception|Throwable $error
+     * @param array               $array
+     * @return void
      */
-    abstract public function verifyRoute(string $token, string $secret): bool;
+    abstract public function error(Exception|Throwable $error, array $array = []): void;
 
     /**
      * 信息处理类型
@@ -64,14 +65,6 @@ abstract class BotHelper {
      * @return string|int 1=实时,2=协程,3=队列,4=异步
      */
     abstract public function getSendType(string $token): string|int;
-
-    /**
-     * 程序报错回调
-     * @param Exception|Throwable $error
-     * @param array               $array
-     * @return void
-     */
-    abstract public function error(Exception|Throwable $error, array $array = []): void;
 
     /**
      * 单个机器人信息
@@ -84,6 +77,22 @@ abstract class BotHelper {
      * @return string
      */
     abstract public function getBotKey(): string;
+
+    /**
+     * 网页接收信息时验证头部信息
+     * @param string $token
+     * @param string $secret
+     * @return bool true=验证通过
+     */
+    public function verifyRoute(string $token, string $secret): bool {
+        if ($this->getConfig('token_verify')) {
+            if (($secret && $secret == get_bot_header_token($token, $this->getConfig('md5_key')))) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 处理信息入口

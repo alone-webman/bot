@@ -333,4 +333,26 @@ class Facade {
         }
         return $plugin_name;
     }
+
+
+    /**
+     * 机器人key转换成路由token
+     * @param string $botToken 机器人Token
+     * @param string $md5Key   md5key
+     * @return string
+     */
+    public static function getBotRouteToken(string $botToken, string $md5Key): string {
+        return md5($botToken . $md5Key);
+    }
+
+
+    /**
+     * 路由token转换成头部token
+     * @param string $routeToken 路由token
+     * @param string $md5Key     md5key
+     * @return string
+     */
+    public static function getBotHeaderToken(string $routeToken, string $md5Key): string {
+        return md5($md5Key . $routeToken);
+    }
 }
