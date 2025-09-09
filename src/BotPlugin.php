@@ -4,7 +4,7 @@ namespace AloneWebMan\Bot;
 
 use AlonePhp\Telegram\Bot;
 use AloneWebMan\Bot\command\BotCommand;
-use AloneWebMan\Bot\command\PluginCommand;
+use AloneWebMan\Bot\command\BotSetCommand;
 
 class BotPlugin {
     /**
@@ -14,7 +14,7 @@ class BotPlugin {
     public static function command(): array {
         return [
             BotCommand::class,
-            PluginCommand::class
+            BotSetCommand::class
         ];
     }
 
