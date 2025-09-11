@@ -8,7 +8,7 @@ use Workerman\Connection\TcpConnection;
 /**
  * 接收机器人信息(异步)
  */
-class AsyncBot {
+class BotAsync {
     public function onMessage(TcpConnection $connection, mixed $data): void {
         if (!empty($arr = Facade::isJson($data))) {
             if (!empty($plugin = $arr['plugin'] ?? '') && !empty($token = $arr['token'] ?? '') && !empty($post = $arr['post'] ?? [])) {

@@ -10,9 +10,9 @@ use Workerman\Timer;
 use ReflectionFunction;
 use Workerman\Coroutine;
 use Workerman\Events\Fiber;
-use AloneWebMan\Bot\process\DevBot;
-use AloneWebMan\Bot\process\AsyncBot;
-use AloneWebMan\Bot\process\RedisQueue;
+use AloneWebMan\Bot\process\BotDev;
+use AloneWebMan\Bot\process\BotAsync;
+use AloneWebMan\Bot\process\BotRedis;
 use AloneWebMan\Bot\command\BotCommand;
 use AloneWebMan\Bot\command\BotSetCommand;
 use Workerman\Connection\AsyncTcpConnection;
@@ -72,7 +72,7 @@ class Facade {
             $process['AsyncBot'] = [
                 "name"      => $plugin,
                 'eventLoop' => Fiber::class,
-                "handler"   => AsyncBot::class,
+                "handler"   => BotAsync::class,
                 'listen'    => 'frame://' . $config['async_listen'],
                 'count'     => $config['async_count']
             ];
@@ -81,14 +81,14 @@ class Facade {
             $process['DevBot'] = [
                 "name"      => $plugin,
                 'eventLoop' => Fiber::class,
-                'handler'   => DevBot::class
+                'handler'   => BotDev::class
             ];
         }
         if ($config['queue_status']) {
             $process['RedisQueue'] = [
                 "name"      => $plugin,
                 'eventLoop' => Fiber::class,
-                'handler'   => RedisQueue::class,
+                'handler'   => BotRedis::class,
                 'count'     => $config['queue_count']
             ];
         }

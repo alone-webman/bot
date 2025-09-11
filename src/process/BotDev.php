@@ -8,7 +8,7 @@ use AloneWebMan\Bot\BotMsg;
 /**
  * 开发调试,拉取信息扔到异步处理
  */
-class DevBot extends Common {
+class BotDev extends Common {
     public function onWorkerStart(mixed $worker): void {
         $this->getPluginName($worker);
         $config = Facade::config($this->plugin_name);

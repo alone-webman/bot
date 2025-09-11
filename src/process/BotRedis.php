@@ -7,7 +7,7 @@ use AloneWebMan\Bot\Facade;
 /**
  * 获取redis队列信息处理
  */
-class RedisQueue extends Common {
+class BotRedis extends Common {
     public function onWorkerStart(mixed $worker): void {
         $this->getPluginName($worker);
         $config = Facade::config($this->plugin_name);
