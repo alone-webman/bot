@@ -138,7 +138,7 @@ class BotMsg {
             "updates" => []
         ], $config);
         $config['token'] = !empty($config['token'] ?? '') ? $config['token'] : md5($config['key']);
-        switch ($config['type']) {
+        switch ($config['cache']) {
             case "redis":
                 $redisKey = !empty($key = ($config["redis"] ?? "")) ? $key : "alone_bot_update_id_" . $config['token'];
                 $get_update_id = function() use ($redisKey) {
