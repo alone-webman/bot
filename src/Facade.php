@@ -13,6 +13,8 @@ use Workerman\Events\Fiber;
 use AloneWebMan\Bot\process\DevBot;
 use AloneWebMan\Bot\process\AsyncBot;
 use AloneWebMan\Bot\process\RedisQueue;
+use AloneWebMan\Bot\command\BotCommand;
+use AloneWebMan\Bot\command\BotSetCommand;
 use Workerman\Connection\AsyncTcpConnection;
 
 class Facade {
@@ -20,6 +22,17 @@ class Facade {
      * 配置
      */
     public static array $config = [];
+
+    /**
+     * 命令开启
+     * @return array
+     */
+    public static function command(): array {
+        return [
+            BotCommand::class,
+            BotSetCommand::class
+        ];
+    }
 
     /**
      * 启动路由
