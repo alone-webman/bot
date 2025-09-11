@@ -7,7 +7,7 @@ use AloneWebMan\Bot\Facade;
 /**
  * 群组信息入口
  */
-class Group extends Common {
+class Group extends Take {
     public function main(): void {
         $this->res->sendMessage(Facade::json($this->req));
     }

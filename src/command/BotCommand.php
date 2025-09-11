@@ -39,12 +39,12 @@ class BotCommand extends Command {
         }
         $list = [];
         $configPath = base_path("plugin/$name/config");
-        Facade::mkDir($configPath);
         $configList = ["app.php", "process.php", "route.php", "telegram.php"];
         $port = rand(1, 3) . rand(2, 9) . rand(001, 999);
         $key = md5($name . time() . $port);
         foreach ($configList as $file) {
             $files = __DIR__ . '/../../demo/config/' . $file;
+            Facade::mkDir(dirname($files));
             $body = @file_get_contents($files);
             $body = Facade::tag($body, [
                 "key"  => $key,
@@ -59,12 +59,12 @@ class BotCommand extends Command {
             }
         }
         $appPath = base_path("plugin/$name/app");
-        Facade::mkDir($appPath);
-        $appList = ["Bot.php", "CallBack.php", "Channel.php", "Common.php", "Group.php"];
+        $appList = ["Bot.php", "Channel.php", "Common.php", "Group.php", "Message.php", "Take.php"];
         foreach ($appList as $file) {
             $files = __DIR__ . '/../../demo/app/' . $file;
+            Facade::mkDir(dirname($files));
             $body = @file_get_contents($files);
-            $body = str_replace("demo\app;", "plugin\\" . $name . "\app;", $body);
+            $body = str_replace("demo\app", "plugin\\" . $name . "\app", $body);
             $saveName = $appPath . "/" . $file;
             if (!empty(@file_put_contents($saveName, $body))) {
                 $list["success"][] = "plugin/$name/app/$file";

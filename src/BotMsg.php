@@ -32,6 +32,23 @@ class BotMsg {
         //预检查查询（用于购物）
         'pre_checkout_query'   => false
     ];
+    // 信息类型,是否接收信息
+    public static array $type = [
+        //文本
+        'text'      => true,
+        //图片
+        'photo'     => false,
+        //视频
+        'video'     => false,
+        //动画
+        'animation' => false,
+        //音频
+        'audio'     => false,
+        //语音
+        'voice'     => false,
+        //文档
+        'document'  => false
+    ];
 
     /**
      * 机器人启动
