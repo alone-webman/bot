@@ -150,7 +150,7 @@ class Facade {
              */
             $req = BotReq::handle($post, $config);
             //回调
-            static::fun($plugin, $token, 'CallBack', 'message', $post, $req);
+            static::fun($plugin, $token, 'CallBack', 'exec', $post, $req);
             if (!empty($req->allow)) {
                 /*
                  * 信息分类处理

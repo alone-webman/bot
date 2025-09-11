@@ -47,7 +47,7 @@ class CallBack {
      * @param BotReq $req
      * @return void
      */
-    public function message(array $post, BotReq $req): void {}
+    public function exec(array $post, BotReq $req): void {}
 
     /**
      * 运行结束
