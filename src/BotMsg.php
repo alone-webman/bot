@@ -170,15 +170,15 @@ class BotMsg {
         Facade::timer((float) $config['timer'], function() use ($callback, $config, $updates, $get_update_id, $set_update_id, $bot) {
             $bot->getUpdates($get_update_id(), $config['limit'], 0, $updates);
             $array = $bot->array();
+            $result = $array['result'] ?? [];
             if (!empty($mid = ($config['mid'] ?? ''))) {
                 if (is_callable($mid)) {
-                    $mid($array);
+                    $mid($array, $result);
                 }
             }
             if (!empty($array)) {
                 $ok = ($array['ok'] ?? '');
                 if (!empty($ok)) {
-                    $result = $array['result'] ?? [];
                     if (!empty($result)) {
                         $update_ids = array_column($result, 'update_id');
                         $update_id = (int) (max($update_ids) ?: 0);

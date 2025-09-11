@@ -24,10 +24,13 @@ class CallBack {
     /**
      * 进程入口
      * @param array $array 进程获取到的bot信息
+     * @param array $result
      * @return void
      */
-    public function process(array $array): void {
-        dump($array);
+    public function process(array $array, array $result): void {
+        if (!empty($result)) {
+            dump($result);
+        }
     }
 
     /**
