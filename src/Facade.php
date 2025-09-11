@@ -47,12 +47,20 @@ class Facade {
                 if (empty($token)) {
                     return response("error1");
                 }
+                $res = static::callStatic($plugin, $token, 'CallBack', 'route', $req->post());
+                if (!empty($res)) {
+                    return $res;
+                }
                 $post = $req->post();
                 if (empty($post)) {
                     return response("error2");
                 }
-                if (empty(static::call($plugin, $token, "Common", "verifyRoute", $token, request()->header('x-telegram-bot-api-secret-token', "")))) {
-                    return response("error3");
+                $config = static::config($plugin);
+                if ($config['token_verify'] ?? null) {
+                    $secret = request()->header('x-telegram-bot-api-secret-token', "");
+                    if ((!$secret || $secret != get_bot_header_token($token, $config['md5_key']))) {
+                        return response("error3");
+                    }
                 }
                 static::run($plugin, $token, $post);
                 return response("success");
@@ -104,7 +112,7 @@ class Facade {
      * @return void
      */
     public static function run(string $plugin, string $token, array $post): void {
-        $type = static::call($plugin, $token, 'Common', 'getSendType', $token);
+        $type = static::callStatic($plugin, $token, 'CallBack', 'type');
         if (!empty($type)) {
             switch ($type) {
                 case 2:
@@ -141,6 +149,8 @@ class Facade {
              * 请求信息处理
              */
             $req = BotReq::handle($post, $config);
+            //回调
+            static::callStatic($plugin, $token, 'CallBack', 'message', $post, $req);
             if (!empty($req->allow)) {
                 /*
                  * 信息分类处理
@@ -167,15 +177,12 @@ class Facade {
                 }
             }
         } catch (Exception|Throwable $exception) {
-            static::call($plugin, $token, 'Common', 'error', $exception, [
-                'plugin' => $plugin,
-                'token'  => $token,
-                'post'   => $post,
-                'code'   => $exception->getCode(),
-                'msg'    => $exception->getMessage(),
-                'file'   => $exception->getFile(),
-                'line'   => $exception->getLine(),
-                'date'   => date('Y-m-d H:i:s')
+            static::callStatic($plugin, $token, 'CallBack', 'error', $post, $exception, [
+                'code' => $exception->getCode(),
+                'msg'  => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'date' => date('Y-m-d H:i:s')
             ]);
         }
     }
@@ -258,7 +265,26 @@ class Facade {
     public static function call(string $plugin, string $token, string $name, string $method, ...$parameter): mixed {
         $config = static::config($plugin);
         $className = "\\" . trim(str_replace('/', '\\', $config['app_path']), '\\') . "\\" . $name;
-        return call_user_func_array([new $className($plugin, $token), $method], $parameter);
+        $app = new $className($plugin, $token);
+        call_user_func_array([$app, $method], $parameter);
+        static::callStatic($plugin, $token, 'CallBack', 'end', $app);
+        return $app;
+    }
+
+
+    /**
+     * 执行方法
+     * @param string $plugin 插件名
+     * @param string $token
+     * @param string $name   文件名
+     * @param string $method 方法名
+     * @param        ...$parameter
+     * @return mixed
+     */
+    public static function callStatic(string $plugin, string $token, string $name, string $method, ...$parameter): mixed {
+        $config = static::config($plugin);
+        $className = "\\" . trim(str_replace('/', '\\', $config['app_path']), '\\') . "\\" . $name;
+        return call_user_func_array([$className, $method], [$plugin, $token, ...$parameter]);
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace AloneWebMan\Bot;
 
-use Exception;
-use Throwable;
 use AlonePhp\Telegram\Bot;
 
 /**
@@ -52,21 +50,6 @@ abstract class BotHelper {
     public Bot|null $tel = null;
 
     /**
-     * 程序报错回调
-     * @param Exception|Throwable $error
-     * @param array               $array
-     * @return void
-     */
-    abstract public function error(Exception|Throwable $error, array $array = []): void;
-
-    /**
-     * 信息处理类型
-     * @param string $token 路由token
-     * @return string|int 1=实时,2=协程,3=队列,4=异步
-     */
-    abstract public function getSendType(string $token): string|int;
-
-    /**
      * 单个机器人信息
      * @return mixed
      */
@@ -77,22 +60,6 @@ abstract class BotHelper {
      * @return string
      */
     abstract public function getBotKey(): string;
-
-    /**
-     * 网页接收信息时验证头部信息
-     * @param string $token  路由token
-     * @param string $secret 头部secret_token
-     * @return bool true=验证通过
-     */
-    public function verifyRoute(string $token, string $secret): bool {
-        if ($this->getConfig('token_verify')) {
-            if (($secret && $secret == get_bot_header_token($token, $this->getConfig('md5_key')))) {
-                return true;
-            }
-            return false;
-        }
-        return true;
-    }
 
     /**
      * 处理信息入口

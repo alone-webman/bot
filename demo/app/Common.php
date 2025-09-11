@@ -2,32 +2,9 @@
 
 namespace demo\app;
 
-use Exception;
-use Throwable;
 use AloneWebMan\Bot\BotHelper;
 
 class Common extends BotHelper {
-
-    /**
-     * 程序报错回调
-     * @param Exception|Throwable $error
-     * @param array               $array
-     * @return void
-     */
-    public function error(Exception|Throwable $error, array $array = []): void {
-        $bot = alone_bot($this->getConfig('dev_bot_key', ''));
-        // $bot->chat_id("")->sendMessage(Facade::json($array));
-    }
-
-    /**
-     * 信息处理类型
-     * @param string $token
-     * @return string|int 1=实时,2=协程,3=队列,4=异步
-     */
-    public function getSendType(string $token): string|int {
-        return 2;
-    }
-
     /**
      * 单个机器人信息
      * @return mixed

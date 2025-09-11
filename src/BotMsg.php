@@ -64,27 +64,27 @@ class BotMsg {
             //接收信息类型
             "updates" => []
         ], $config);
-        BotMsg::BotTimer($config["key"], function($array) use ($config) {
+        BotMsg::BotTimer($config["key"], function($result) use ($config) {
             switch ((int) $config["task"]) {
                 case 2:
                     // 协程
-                    Coroutine::create(function() use ($config, $array) {
-                        foreach ($array as $post) {
+                    Coroutine::create(function() use ($config, $result) {
+                        foreach ($result as $post) {
                             Facade::exec($config["plugin"], $config["token"], $post);
                         }
                     });
                     break;
                 case 3:
                     // 队列
-                    foreach ($array as $post) {
+                    foreach ($result as $post) {
                         Facade::queue($config["plugin"], $config["token"], $post);
                     }
                     break;
                 case 4:
                     // 异步
                     $async = new AsyncTcpConnection($config["link"]);
-                    $async->onConnect = function(AsyncTcpConnection $connection) use ($config, $array) {
-                        foreach ($array as $post) {
+                    $async->onConnect = function(AsyncTcpConnection $connection) use ($config, $result) {
+                        foreach ($result as $post) {
                             $connection->send(json_encode(['plugin' => $config["plugin"], 'token' => $config["token"], 'post' => $post]));
                         }
                         $connection->close();
@@ -93,7 +93,7 @@ class BotMsg {
                     break;
                 default:
                     // 实时
-                    foreach ($array as $post) {
+                    foreach ($result as $post) {
                         Facade::exec($config["plugin"], $config["token"], $post);
                     }
                     break;
@@ -174,7 +174,7 @@ class BotMsg {
                         $update_ids = array_column($result, 'update_id');
                         $update_id = (int) (max($update_ids) ?: 0);
                         $set_update_id($update_id + 1);
-                        $callback($result);
+                        $callback($result, $array);
                     }
                 }
             }
