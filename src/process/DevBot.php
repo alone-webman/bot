@@ -18,7 +18,7 @@ class DevBot extends Common {
             // 机器人标识
             "token"   => $token,
             // 任务类型 1=实时,2=协程,3=队列,4=异步
-            "task"    => $config['dev_type'],
+            "task"    => ($config['dev_type'] ?? 2) ?: 2,
             // 异步连接
             "link"    => "frame://" . $config['async_connect'],
             // 定时器
