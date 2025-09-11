@@ -39,7 +39,6 @@ class BotPlugin {
         return md5($md5Key . md5($routeToken . $md5Key));
     }
 
-
     /**
      * 设置网址
      * @param string $plugin   插件名
@@ -49,6 +48,8 @@ class BotPlugin {
      */
     public static function setBotWeb(string $plugin, string $botToken, array $conf = []): Bot {
         $config = alone_bot_config($plugin);
+        // 配置
+        $conf['conf'] = array_merge(["drop_pending_updates" => true], $conf['conf'] ?? []);
         $conf = array_merge([
             // 域名
             "domain" => $config['domain'] ?? '',
@@ -57,9 +58,7 @@ class BotPlugin {
             // 路由token
             "token"  => get_bot_route_token($botToken, $config['md5_key']),
             //false不设置,true=默认设置
-            "secret" => false,
-            // 配置
-            "conf"   => []
+            "secret" => false
         ], $conf);
         $type = array_merge([
             //普通消息
