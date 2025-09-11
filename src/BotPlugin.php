@@ -26,7 +26,6 @@ class BotPlugin {
         return md5($md5Key . md5($routeToken . $md5Key));
     }
 
-
     /**
      * 设置机器人网址
      * @param string $plugin   插件名
