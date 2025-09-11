@@ -48,11 +48,10 @@ class CallBack {
 
     /**
      * 运行结束
-     * @param array $post
      * @param mixed $app
      * @return void
      */
-    public function end(array $post, mixed $app) {}
+    public function end(mixed $app) {}
 
     /**
      * 程序报错
