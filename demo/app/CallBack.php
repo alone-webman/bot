@@ -27,11 +27,7 @@ class CallBack {
      * @param array $result
      * @return void
      */
-    public function process(array $array, array $result): void {
-        if (!empty($result)) {
-            dump($result);
-        }
-    }
+    public function process(array $array, array $result): void {}
 
     /**
      * 处理类型
@@ -63,9 +59,7 @@ class CallBack {
      * @param array               $array
      * @return void
      */
-    public function error(array $post, Exception|Throwable $error, array $array = []): void {
-        dump($array);
-    }
+    public function error(array $post, Exception|Throwable $error, array $array = []): void {}
 
     /**
      * @param string $plugin 插件名
