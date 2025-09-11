@@ -47,7 +47,7 @@ class Facade {
                 if (empty($token)) {
                     return response("error1");
                 }
-                $res = static::callStatic($plugin, $token, 'CallBack', 'route', $req->post());
+                $res = static::fun($plugin, $token, 'CallBack', 'route', $req->post());
                 if (!empty($res)) {
                     return $res;
                 }
@@ -112,7 +112,7 @@ class Facade {
      * @return void
      */
     public static function run(string $plugin, string $token, array $post): void {
-        $type = static::callStatic($plugin, $token, 'CallBack', 'type');
+        $type = static::fun($plugin, $token, 'CallBack', 'type');
         if (!empty($type)) {
             switch ($type) {
                 case 2:
@@ -150,7 +150,7 @@ class Facade {
              */
             $req = BotReq::handle($post, $config);
             //回调
-            static::callStatic($plugin, $token, 'CallBack', 'message', $post, $req);
+            static::fun($plugin, $token, 'CallBack', 'message', $post, $req);
             if (!empty($req->allow)) {
                 /*
                  * 信息分类处理
@@ -177,7 +177,7 @@ class Facade {
                 }
             }
         } catch (Exception|Throwable $exception) {
-            static::callStatic($plugin, $token, 'CallBack', 'error', $post, $exception, [
+            static::fun($plugin, $token, 'CallBack', 'error', $post, $exception, [
                 'code' => $exception->getCode(),
                 'msg'  => $exception->getMessage(),
                 'file' => $exception->getFile(),
@@ -267,7 +267,7 @@ class Facade {
         $className = "\\" . trim(str_replace('/', '\\', $config['app_path']), '\\') . "\\" . $name;
         $app = new $className($plugin, $token);
         call_user_func_array([$app, $method], $parameter);
-        static::callStatic($plugin, $token, 'CallBack', 'end', $app);
+        static::fun($plugin, $token, 'CallBack', 'end', $app);
         return $app;
     }
 
@@ -281,10 +281,10 @@ class Facade {
      * @param        ...$parameter
      * @return mixed
      */
-    public static function callStatic(string $plugin, string $token, string $name, string $method, ...$parameter): mixed {
+    public static function fun(string $plugin, string $token, string $name, string $method, ...$parameter): mixed {
         $config = static::config($plugin);
         $className = "\\" . trim(str_replace('/', '\\', $config['app_path']), '\\') . "\\" . $name;
-        return call_user_func_array([$className, $method], [$plugin, $token, ...$parameter]);
+        return call_user_func_array([new $className($plugin, $token), $method], $parameter);
     }
 
     /**

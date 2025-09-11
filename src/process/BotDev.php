@@ -34,6 +34,10 @@ class BotDev extends Common {
             "file"    => run_path("runtime/" . $this->plugin_name . "_update_id_" . $token . ".cache"),
             // update_id redis key
             "redis"   => $this->plugin_name . "_update_id_" . $token,
+            // 中间件
+            "mid"     => function($array) use ($token) {
+                Facade::fun($this->plugin_name, $token, "CallBack", "process", $array);
+            },
             //接收信息类型
             "updates" => BotMsg::$updates
         ]);

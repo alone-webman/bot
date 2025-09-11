@@ -60,7 +60,7 @@ class BotCommand extends Command {
         }
         $appPath = base_path("plugin/$name/app");
         Facade::mkDir($appPath);
-        $appList = ["Bot.php", "Channel.php", "Common.php", "Group.php"];
+        $appList = ["Bot.php", "CallBack.php", "Channel.php", "Common.php", "Group.php"];
         foreach ($appList as $file) {
             $files = __DIR__ . '/../../demo/app/' . $file;
             $body = @file_get_contents($files);

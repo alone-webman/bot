@@ -61,6 +61,8 @@ class BotMsg {
             "file"    => "",
             // update_id redis key
             "redis"   => "",
+            // 回调
+            "mid"     => null,
             //接收信息类型
             "updates" => []
         ], $config);
@@ -135,6 +137,8 @@ class BotMsg {
             "file"    => "",
             // update_id redis key
             "redis"   => "",
+            // 回调
+            "mid"     => null,
             //接收信息类型
             "updates" => []
         ], $config);
@@ -166,6 +170,11 @@ class BotMsg {
         Facade::timer((float) $config['timer'], function() use ($callback, $config, $updates, $get_update_id, $set_update_id, $bot) {
             $bot->getUpdates($get_update_id(), $config['limit'], 0, $updates);
             $array = $bot->array();
+            if (!empty($mid = ($config['mid'] ?? ''))) {
+                if (is_callable($mid)) {
+                    $mid($array);
+                }
+            }
             if (!empty($array)) {
                 $ok = ($array['ok'] ?? '');
                 if (!empty($ok)) {
