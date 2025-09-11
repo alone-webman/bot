@@ -14,6 +14,7 @@ class BotDev extends Common {
         $config = Facade::config($this->plugin_name);
         $token = get_bot_route_token($config['dev_bot_key'], $config['md5_key']);
         BotMsg::botStart([
+            // 插件名称
             "plugin"  => $this->plugin_name,
             // 机器人标识
             "token"   => $token,

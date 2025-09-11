@@ -41,6 +41,7 @@ class BotMsg {
     public static function botStart(array $config): void {
         // 配置
         $config = array_merge([
+            // 插件名称
             "plugin"  => "",
             // 机器人标识
             "token"   => "",

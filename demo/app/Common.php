@@ -4,7 +4,6 @@ namespace demo\app;
 
 use Exception;
 use Throwable;
-use AloneWebMan\Bot\Facade;
 use AloneWebMan\Bot\BotHelper;
 
 class Common extends BotHelper {
