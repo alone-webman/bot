@@ -23,6 +23,8 @@ return [
     "dev_timer"       => 0.1,
     // 机器人key
     "dev_bot_key"     => "",
+    // 开人员id 收报错
+    "dev_chat_id"     => "",
     // 处理方式 1=实时,2=协程,3=队列,4=异步
     "dev_type"        => 2,
 

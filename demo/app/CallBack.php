@@ -5,6 +5,7 @@ namespace demo\app;
 use Exception;
 use Throwable;
 use AloneWebMan\Bot\BotReq;
+use AloneWebMan\Bot\Facade;
 
 class CallBack {
     // 当前插件名
@@ -27,7 +28,9 @@ class CallBack {
      * @param array $result
      * @return void
      */
-    public function process(array $array, array $result): void {}
+    public function process(array $array, array $result): void {
+        // $result && dump($result);
+    }
 
     /**
      * 处理类型
@@ -43,14 +46,18 @@ class CallBack {
      * @param BotReq $req
      * @return void
      */
-    public function exec(array $post, BotReq $req): void {}
+    public function exec(array $post, BotReq $req): void {
+        //  dump($post);
+    }
 
     /**
      * 运行结束
      * @param mixed $app
      * @return void
      */
-    public function end(mixed $app) {}
+    public function end(mixed $app) {
+        // dump($app);
+    }
 
     /**
      * 程序报错
@@ -59,7 +66,11 @@ class CallBack {
      * @param array               $array
      * @return void
      */
-    public function error(array $post, Exception|Throwable $error, array $array = []): void {}
+    public function error(array $post, Exception|Throwable $error, array $array = []): void {
+        $content = Facade::json($array);
+        $config = alone_bot_config($this->plugin);
+        alone_bot($config['dev_bot_key'])->chat_id($config["dev_chat_id"])->sendMessage($content);
+    }
 
     /**
      * @param string $plugin 插件名
